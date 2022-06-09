@@ -165,7 +165,7 @@ namespace cpl
 			} while ((parent = parent->getParentComponent()));
 		}
 
-		return String::empty;
+		return String();
 	}
 
 	void CToolTipWindow::hideTip()

@@ -532,7 +532,7 @@ namespace cpl
 
 		class Reference : cpl::Utility::CNoncopyable
 		{
-			friend class StreamType;
+			friend StreamType;
 		protected:
 			std::shared_ptr<StreamType> stream;
 			Reference() = default;
@@ -572,7 +572,7 @@ namespace cpl
 		public:
 
 			friend struct ListenerContext;
-			friend class StreamType;
+			friend StreamType;
 
 			/// <summary>
 			/// Adds a listener that to receive callbacks going forward.
@@ -625,17 +625,17 @@ namespace cpl
 				PerformanceMeasurements measures;
 
 				measures.consumerOverhead = consumerOverhead;
-				measures.producerOverhead = stream->producerOverhead;
+				measures.producerOverhead = this->stream->producerOverhead;
 				measures.consumerUsage = consumerUsage;
-				measures.producerUsage = stream->producerUsage;
-				measures.droppedFrames = stream->droppedFrames;
+				measures.producerUsage = this->stream->producerUsage;
+				measures.droppedFrames = this->stream->droppedFrames;
 
 				return measures;
 			}
 
 			std::size_t getApproximateInFlightPackets() const noexcept
 			{
-				return stream->audioFifo.get() ? stream->audioFifo->enqueuededElements() : 0;
+				return this->stream->audioFifo.get() ? this->stream->audioFifo->enqueuededElements() : 0;
 			}
 
 			Output(Output&& other) = default;
@@ -719,7 +719,7 @@ namespace cpl
 
 		class Input final : public Reference
 		{
-			friend class StreamType;
+			friend StreamType;
 		public:
 #ifdef CPL_JUCE
 			void processIncomingRTAudio(T** buffer, std::size_t numChannels, std::size_t numSamples, juce::AudioPlayHead& ph)
@@ -755,7 +755,7 @@ namespace cpl
 
 				func(internalInfo);
 
-				stream->publishFrame(ProducerFrame(internalInfo));
+				this->stream->publishFrame(ProducerFrame(internalInfo));
 			}
 
 			bool enqueueChannelName(std::size_t index, std::string&& name)
@@ -763,15 +763,15 @@ namespace cpl
 				ExclusiveDebugScope scope(reentrancy);
 
 				ProducerFrame frame;
-				frame.emplace<ChannelNameData>(ChannelNameData{ index, std::move(name) });
+				frame.template emplace<ChannelNameData>(ChannelNameData{ index, std::move(name) });
 
-				return stream->publishFrame(std::move(frame));
+				return this->stream->publishFrame(std::move(frame));
 			}
 
 			~Input()
 			{
-				if (stream)
-					stream->inputDestroyed();
+				if (this->stream)
+					this->stream->inputDestroyed();
 			}
 
 			Input(Input&&) = default;

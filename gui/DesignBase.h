@@ -32,6 +32,7 @@
 #define CPL_DESIGNBASE_H
 
 #include "../Common.h"
+#include "Utility.h"
 #include <map>
 #include <vector>
 
@@ -39,7 +40,7 @@ namespace cpl
 {
 	#ifdef CPL_JUCE
 	typedef juce::Colour CColour;
-	typedef juce::Colours CColours;
+	// typedef juce::Colours CColours;
 	typedef juce::Point<int> CPoint;
 	typedef juce::Rectangle<int> CRect;
 	typedef juce::Component GraphicComponent;
@@ -116,14 +117,14 @@ namespace cpl
 		static CLookAndFeel_CPL & defaultLook();
 		// overrides
 		juce::Typeface::Ptr getTypefaceForFont(juce::Font const& font) override;
-		virtual juce::LowLevelGraphicsContext * createGraphicsContext(
-			const Image &imageToRenderOn,
-			const Point< int > &origin,
-			const RectangleList< int > &initialClip) override;
+		virtual std::unique_ptr<juce::LowLevelGraphicsContext> createGraphicsContext(
+			const juce::Image &imageToRenderOn,
+			const juce::Point< int > origin,
+			const juce::RectangleList< int > &initialClip)  override;
 		juce::Font getPopupMenuFont() override;
-		juce::Font getComboBoxFont(ComboBox &) override;
+		juce::Font getComboBoxFont(juce::ComboBox &) override;
 		void drawComboBox(
-			Graphics &,
+			juce::Graphics &,
 			int width,
 			int height,
 			bool isButtonDown,
@@ -131,7 +132,7 @@ namespace cpl
 			int buttonY,
 			int buttonW,
 			int buttonH,
-			ComboBox &) override;
+			juce::ComboBox &) override;
 
 		// extra interface
 		juce::Font getStdFont();

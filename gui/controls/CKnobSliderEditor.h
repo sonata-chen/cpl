@@ -31,6 +31,7 @@
 #define _CKNOBSLIDEREDITOR_H
 
 #include "../CBaseControl.h"
+#include "gui/CCtrlEditSpace.h"
 
 namespace cpl
 {

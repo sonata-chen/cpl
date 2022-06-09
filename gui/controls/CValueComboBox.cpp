@@ -110,6 +110,7 @@ namespace cpl
 		return iCtrlPrec_t(idx - 1) / (size - 1);
 	}
 
+
 	int CValueComboBox::getZeroBasedSelIndex() const
 	{
 		auto value = getZeroBasedSelIndex<int>();
@@ -121,11 +122,11 @@ namespace cpl
 	void CValueComboBox::setValues(std::vector<std::string> inputValues)
 	{
 		values = std::move(inputValues);
-		auto currentIndex = box.getItemText(box.getSelectedItemIndex() - 1);
+        juce::String currentIndex = box.getItemText(box.getSelectedItemIndex() - 1);
 		box.clear(NotificationType::dontSendNotification);
 		juce::StringArray arr;
 		auto newIndex = -1; auto counter = 0;
-		for (const auto & str : values)
+		for (const juce::String & str : values)
 		{
 			counter++;
 			if (currentIndex == str)
@@ -145,7 +146,7 @@ namespace cpl
 
 	void CValueComboBox::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
 	{
-		valueObject->setNormalizedValue(intToFloat(box.getSelectedId(), (int)values.size()));
+		valueObject->setNormalizedValue(intToFloat2(box.getSelectedId(), (int)values.size()));
 		baseControlValueChanged();
 	}
 

@@ -249,7 +249,7 @@ namespace cpl
 	{
 	public:
 
-		using CBlockingLockFreeQueueMovable::CBlockingLockFreeQueueMovable;
+		using CBlockingLockFreeQueueMovable<T>::CBlockingLockFreeQueueMovable;
 
 		/// <summary>
 		/// PRODUCER ONLY.
@@ -262,23 +262,23 @@ namespace cpl
 		{
 			if (allocOnFail)
 			{
-				if (queue.load()->enqueue(data))
+				if (this->queue.load()->enqueue(data))
 				{
-					semaphore.signal();
+					this->semaphore.signal();
 					return true;
 				}
 			}
 			else
 			{
-				if (queue.load()->try_enqueue(data))
+				if (this->queue.load()->try_enqueue(data))
 				{
-					semaphore.signal();
+					this->semaphore.signal();
 					return true;
 				}
 			}
 			if (enqueueNewAllocations)
 			{
-				enqueuedDataAllocations = true;
+				this->enqueuedDataAllocations = true;
 			}
 			return false;
 		}
@@ -291,14 +291,14 @@ namespace cpl
 	class CBlockingLockFreeQueue<T, typename std::enable_if<std::is_copy_constructible<T>::value>::type>
 		: public CBlockingLockFreeQueueCopyable<T>
 	{
-		using CBlockingLockFreeQueueCopyable::CBlockingLockFreeQueueCopyable;
+		using CBlockingLockFreeQueueCopyable<T>::CBlockingLockFreeQueueCopyable;
 	};
 
 	template<typename T>
 	class CBlockingLockFreeQueue<T, typename std::enable_if<!std::is_copy_constructible<T>::value>::type>
 		: public CBlockingLockFreeQueueMovable<T>
 	{
-		using CBlockingLockFreeQueueMovable::CBlockingLockFreeQueueMovable;
+		using CBlockingLockFreeQueueMovable<T>::CBlockingLockFreeQueueMovable;
 	};
 
 };

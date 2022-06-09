@@ -35,6 +35,10 @@
 #include <functional>
 #include <algorithm>
 #include <type_traits>
+#include <cstring>
+#include <sstream>
+#include <string>
+#include "MacroConstants.h"
 
 namespace cpl
 {

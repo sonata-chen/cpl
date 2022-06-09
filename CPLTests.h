@@ -30,6 +30,8 @@
 #ifndef CPLTESTS_H
 #define CPLTESTS_H
 
+#include <cstddef>
+
 namespace cpl
 {
 

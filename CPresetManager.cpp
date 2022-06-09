@@ -231,7 +231,7 @@ namespace cpl
 	{
 		currentPresets.clear();
 
-		juce::DirectoryIterator iter(File(presetDirectory()), false, "*." + programInfo.programAbbr);
+		juce::DirectoryIterator iter(juce::File(presetDirectory()), false, "*." + programInfo.programAbbr);
 		while (iter.next())
 		{
 			currentPresets.push_back(iter.getFile());

@@ -37,6 +37,7 @@
 #define _CLIFOSTREAM_H
 
 #include "CDataBuffer.h"
+#include "../Mathext.h"
 
 #ifdef _DEBUG
 #define NOEXCEPT_RELEASE

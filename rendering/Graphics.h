@@ -73,10 +73,11 @@ namespace cpl
 
 			void applyToOpenGL()
 			{
+                using namespace juce::gl;
 				// move first - bad
-				glTranslatef(static_cast<GLfloat>(position.x), static_cast<GLfloat>(position.y), static_cast<GLfloat>(position.z));
+                glTranslatef(static_cast<GLfloat>(position.x), static_cast<GLfloat>(position.y), static_cast<GLfloat>(position.z));
 				// to avoid clipping. this is probably not how it is done.
-				glScalef(1, 1, 0.1f);
+                glScalef(1, 1, 0.1f);
 				glRotatef(static_cast<GLfloat>(rotation.x), 1.0f, 0.0f, 0.0f);
 				glRotatef(static_cast<GLfloat>(rotation.y), 0.0f, 1.0f, 0.0f);
 				glRotatef(static_cast<GLfloat>(rotation.z), 0.0f, 0.0f, 1.0f);

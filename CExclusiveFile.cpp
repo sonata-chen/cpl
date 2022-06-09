@@ -31,6 +31,7 @@
 #include "MacroConstants.h"
 #include "PlatformSpecific.h"
 #include "Misc.h"
+#include "stdext.h"
 
 namespace cpl
 {

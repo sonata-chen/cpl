@@ -5,6 +5,7 @@
 #include <bitset>
 #include <array>
 #include <string>
+#include <cstring>
 #include "../PlatformSpecific.h"
 
 namespace cpl

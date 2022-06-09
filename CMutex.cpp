@@ -27,6 +27,9 @@
 
 *************************************************************************************/
 #include "CMutex.h"
+#include "ProgramInfo.h"
+#include "Misc.h"
+#include "Exceptions.h"
 
 namespace cpl
 {

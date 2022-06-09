@@ -29,6 +29,7 @@
 
 #include "Protected.h"
 #include "lib/StackBuffer.h"
+#include "stdext.h"
 #include <memory>
 #include <sstream>
 #ifdef CPL_MSVC

@@ -59,7 +59,7 @@ namespace cpl
 						data[i] = (float)std::rand();
 					}
 
-					std_memory_fence(std::memory_order::memory_order_release);
+					std_memory_fence(std::memory_order_release);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ namespace cpl
 				if (lock.owns_lock())
 				{
 					// guaranteed that any changes from thread one to 'data' is seen after this fence?
-					std_memory_fence(std::memory_order::memory_order_acquire);
+					std_memory_fence(std::memory_order_acquire);
 
 					auto res = std::accumulate(data.begin(), data.end(), 0.0f);
 					std::cout << "Accumulated result is: " << res << std::endl;

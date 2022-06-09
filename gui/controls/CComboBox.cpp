@@ -169,11 +169,11 @@ namespace cpl
 	void CComboBox::setValues(std::vector<std::string> inputValues)
 	{
 		values = std::move(inputValues);
-		auto currentIndex = box.getItemText(box.getSelectedItemIndex() - 1);
+        juce::String currentIndex = box.getItemText(box.getSelectedItemIndex() - 1);
 		box.clear(NotificationType::dontSendNotification);
 		juce::StringArray arr;
 		auto newIndex = -1; auto counter = 0;
-		for (const auto & str : values)
+		for (const juce::String & str : values)
 		{
 			counter++;
 			if (currentIndex == str)

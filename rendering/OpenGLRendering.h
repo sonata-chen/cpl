@@ -51,6 +51,8 @@ namespace cpl
 {
 	namespace OpenGLRendering
 	{
+        using namespace juce::gl;
+
 		typedef GLenum GLFeatureType;
 		typedef GLint GLSetting;
 		typedef GLfloat Vertex;

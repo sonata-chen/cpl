@@ -29,6 +29,8 @@
 
 #include "../LibraryOptions.h"
 #include "../Common.h"
+#include "Mathext.h"
+#include "gui/CToolTip.h"
 #include "DesignBase.h"
 #include "../rendering/CSubpixelSoftwareGraphics.h"
 #if defined(CPL_HINT_FONT)
@@ -349,17 +351,17 @@ namespace cpl
 		return createGraphicsContext(buffer, origin, clip);
 	}*/
 
-	juce::LowLevelGraphicsContext * CLookAndFeel_CPL::createGraphicsContext(
+    std::unique_ptr<juce::LowLevelGraphicsContext> CLookAndFeel_CPL::createGraphicsContext(
 		const Image &imageToRenderOn,
-		const Point< int > &origin,
+		const Point< int > origin,
 		const RectangleList< int > &initialClip)
 	{
 		if (tryToRenderSubpixel/* && imageToRenderOn.getFormat() == imageToRenderOn.RGB*/)
 		{
-			return new rendering::CSubpixelSoftwareGraphics(imageToRenderOn, origin, initialClip);
+			return std::unique_ptr<juce::LowLevelGraphicsContext>(new rendering::CSubpixelSoftwareGraphics(imageToRenderOn, origin, initialClip));
 		}
 
-		return new juce::LowLevelGraphicsSoftwareRenderer(imageToRenderOn, origin, initialClip);
+		return std::unique_ptr<juce::LowLevelGraphicsContext>(new juce::LowLevelGraphicsSoftwareRenderer(imageToRenderOn, origin, initialClip));
 
 	}
 

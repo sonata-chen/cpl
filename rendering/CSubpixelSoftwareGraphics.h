@@ -53,18 +53,18 @@ namespace cpl
 			virtual ~CSubpixelSoftwareGraphics() {};
 
 			// overrides
-			virtual void drawGlyph(int glyphNumber, const AffineTransform & z) override;
+			virtual void drawGlyph(int glyphNumber, const juce::AffineTransform & z) override;
 
 			// the height in points where to stop drawing subpixel aa-glyphs
 			static void setAntialiasingTransition(float heightToStopSubpixels);
 
 		private:
 
-			bool tryToDrawGlyph(int glyphNumber, const AffineTransform & z);
+			bool tryToDrawGlyph(int glyphNumber, const juce::AffineTransform & z);
 			static float maxHeight;
-			Point<int> origin;
+            juce::Point<int> origin;
 			const juce::Image & buffer;
-			const RectangleList<int> & startingClip;
+			const juce::RectangleList<int> & startingClip;
 			CDisplaySetup & displayInfo;
 
 		};

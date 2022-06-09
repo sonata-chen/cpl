@@ -80,7 +80,7 @@ namespace cpl
 			/// </summary>
 			void setFreeQ(bool toggle) noexcept
 			{
-				qIsFree.store(!!toggle, std::memory_order::memory_order_relaxed);
+				qIsFree.store(!!toggle, std::memory_order_relaxed);
 			}
 
 			std::size_t getNumFilters() const noexcept

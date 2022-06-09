@@ -67,22 +67,22 @@ namespace cpl
 			std::visit(
 				[this](auto && arg)
 				{
-					using T = std::decay_t<decltype(arg)>;
+					using U = std::decay_t<decltype(arg)>;
 
-					if constexpr (std::is_same_v<T, TransportData>)
+					if constexpr (std::is_same_v<U, TransportData>)
 					{
 						playhead.transport = arg;
 					}
-					else if constexpr (std::is_same_v<T, ArrangementData>)
+					else if constexpr (std::is_same_v<U, ArrangementData>)
 					{
 						playhead.arrangement = arg;
 					}
-					else if constexpr (std::is_same_v<T, ChannelNameData>)
+					else if constexpr (std::is_same_v<U, ChannelNameData>)
 					{
 						channelNames.resize(std::max(channelNames.size(), arg.channelIndex + 1));
 						channelNames[arg.channelIndex] = std::move(arg.name);
 					}
-					else if constexpr (std::is_same_v<T, ProducerInfo>)
+					else if constexpr (std::is_same_v<U, ProducerInfo>)
 					{
 						static_cast<ProducerInfo&>(info) = arg;
 						producerInfoChange = true;
@@ -261,7 +261,7 @@ namespace cpl
 
 		CPL_RUNTIME_ASSERTION(numChannels == internalInfo.channels);
 
-		FrameBatch batch(*stream);
+		FrameBatch batch(*this->stream);
 
 		cpl::CProcessorTimer overhead, all;
 		overhead.start(); all.start();
@@ -280,7 +280,7 @@ namespace cpl
 
 		if (framesWereDropped || problemsPushingPlayHead || playhead.transport != oldPlayhead.transport)
 		{
-			frame.emplace<TransportData>(playhead.transport);
+			frame.template emplace<TransportData>(playhead.transport);
 			if (!batch.submitFrame(std::move(frame)))
 			{
 				anyNewProblemsPushingPlayHeads = true;
@@ -289,7 +289,7 @@ namespace cpl
 
 		if (framesWereDropped || problemsPushingPlayHead || playhead.arrangement != oldPlayhead.arrangement)
 		{
-			frame.emplace<ArrangementData>(playhead.arrangement);
+			frame.template emplace<ArrangementData>(playhead.arrangement);
 			if (!batch.submitFrame(std::move(frame)))
 			{
 				anyNewProblemsPushingPlayHeads = true;
@@ -313,7 +313,7 @@ namespace cpl
 
 				if (aSamples > 0)
 				{
-					auto& packet = frame.emplace<AudioPacket>(AudioPacket::PackingType::AudioPacketSeparate, 1, static_cast<std::uint16_t>(aSamples));
+					auto& packet = frame.template emplace<AudioPacket>(AudioPacket::PackingType::AudioPacketSeparate, 1, static_cast<std::uint16_t>(aSamples));
 					std::memcpy(packet.begin(), (buffer[0] + numSamples - n), static_cast<std::size_t>(aSamples * AudioPacket::element_size));
 
 					if (!batch.submitFrame(std::move(frame)))
@@ -333,7 +333,7 @@ namespace cpl
 
 				if (aSamples > 0)
 				{
-					auto& packet = frame.emplace<AudioPacket>(AudioPacket::PackingType::AudioPacketSeparate, static_cast<std::uint8_t>(numChannels), static_cast<std::uint16_t>(aSamples * numChannels));
+					auto& packet = frame.template emplace<AudioPacket>(AudioPacket::PackingType::AudioPacketSeparate, static_cast<std::uint8_t>(numChannels), static_cast<std::uint16_t>(aSamples * numChannels));
 
 					auto const byteSize = static_cast<std::size_t>(aSamples * AudioPacket::element_size);
 
@@ -351,8 +351,8 @@ namespace cpl
 		}
 
 		// post new measures
-		lpFilterTimeToMeasurement(stream->producerOverhead, overhead.clocksToCoreUsage(overhead.getTime()), timeFraction);
-		lpFilterTimeToMeasurement(stream->producerUsage, all.clocksToCoreUsage(all.getTime()), timeFraction);
+		lpFilterTimeToMeasurement(this->stream->producerOverhead, overhead.clocksToCoreUsage(overhead.getTime()), timeFraction);
+		lpFilterTimeToMeasurement(this->stream->producerUsage, all.clocksToCoreUsage(all.getTime()), timeFraction);
 	}
 
 	template<typename T, std::size_t PacketSize>

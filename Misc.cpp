@@ -43,6 +43,7 @@
 #include "Core.h"
 #include <queue>
 #include "filesystem.h"
+#include "gui/Tools.h"
 
 #ifdef __GNUG__
 #include <cstdlib>

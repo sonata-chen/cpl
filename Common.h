@@ -39,7 +39,11 @@
 
 #ifdef CPL_JUCE
 #ifndef CPL_JUCE_HEADER_PATH
-#include "../JuceLibraryCode/JuceHeader.h"
+    #ifdef CPL_JUCE_CMAKE
+        #include "JuceHeader.h"
+    #else
+        #include "../JuceLibraryCode/JuceHeader.h"
+    #endif
 #else
 #include CPL_JUCE_HEADER_PATH
 #endif

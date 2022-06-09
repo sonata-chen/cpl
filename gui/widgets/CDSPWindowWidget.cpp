@@ -223,8 +223,8 @@ namespace cpl
 	{
 		kwindowList.bSetTitle("Window function");
 		ksymmetryList.bSetTitle("Symmetry");
-		kalpha.bSetTitle(u8"\u03B1"); // greek small alpha
-		kbeta.bSetTitle(u8"\u03B2"); // greek small beta
+		kalpha.bSetTitle(utf8_literal(u8"\u03B1")); // greek small alpha
+		kbeta.bSetTitle(utf8_literal(u8"\u03B2")); // greek small beta
 
 		kwindowList.bSetDescription("The window function describes a kernel applied to the input signal that alters the spectral leakage through controlling the ratio between main lobe width and side-lobes, including inherit patterns.");
 		ksymmetryList.bSetDescription("The symmetry of a window function alters its frequency-domain representation. "

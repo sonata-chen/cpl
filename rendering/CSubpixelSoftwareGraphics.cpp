@@ -31,6 +31,7 @@
 #include "SubpixelRendering.h"
 #include "CSubpixelScanlineRenderer.h"
 #include "../stdext.h"
+#include "Utility.h"
 #include "CDisplaySetup.h"
 #include <memory>
 
@@ -134,14 +135,14 @@ namespace cpl
 		}
 
 
-		void CSubpixelSoftwareGraphics::drawGlyph(int glyphNumber, const AffineTransform & z)
+		void CSubpixelSoftwareGraphics::drawGlyph(int glyphNumber, const juce::AffineTransform & z)
 		{
 			if (!tryToDrawGlyph(glyphNumber, z))
 				return juce::LowLevelGraphicsSoftwareRenderer::drawGlyph(glyphNumber, z);
 		}
 
 
-		bool CSubpixelSoftwareGraphics::tryToDrawGlyph(int glyphNumber, const AffineTransform & z)
+		bool CSubpixelSoftwareGraphics::tryToDrawGlyph(int glyphNumber, const juce::AffineTransform & z)
 		{
 
 			using namespace juce::RenderingHelpers;
@@ -161,7 +162,7 @@ namespace cpl
 			// obtain transform
 			auto & transform = stack->transform;
 			// starting point
-			Point<float> pos(z.getTranslationX(), z.getTranslationY());
+            juce::Point<float> pos(z.getTranslationX(), z.getTranslationY());
 
 			// find what display our glyph resides on.
 			// Note this is wrong - need to somehow figure out the global position
@@ -206,7 +207,7 @@ namespace cpl
 					// increase cache locality
 					glyphRef->lastAccessCount++;
 
-					outlines.reset(glyphRef->edgeTable);
+					outlines.reset(glyphRef->edgeTable.release());
 					// dont delete this instance - manged by the glyphcache
 					outlines.get_deleter().shared = true;
 				}
@@ -244,7 +245,7 @@ namespace cpl
 			auto & colour = stack->fillType.colour;
 
 			// obtain bitmap buffer.
-			Image::BitmapData destData(buffer, Image::BitmapData::readWrite);
+            juce::Image::BitmapData destData(buffer, juce::Image::BitmapData::readWrite);
 
 			// lcd ordering of pixels
 			auto matrixOrder = currentMonitor.displayMatrixOrder;
@@ -289,7 +290,7 @@ namespace cpl
 						case juce::Image::ARGB:
 						{
 
-							Renderer<PixelARGB, LCDMatrixOrientation::RGB>
+							Renderer<juce::PixelARGB, LCDMatrixOrientation::RGB>
 								subpixelRenderer(destData, colour, pos, startingClip, gammaScale);
 
 							outlines->iterate(subpixelRenderer);
@@ -310,7 +311,7 @@ namespace cpl
 						case juce::Image::RGB:
 						{
 
-							Renderer<PixelRGB, LCDMatrixOrientation::BGR>
+							Renderer<juce::PixelRGB, LCDMatrixOrientation::BGR>
 								subpixelRenderer(destData, colour, pos, startingClip, gammaScale);
 
 							outlines->iterate(subpixelRenderer);
@@ -319,7 +320,7 @@ namespace cpl
 						case juce::Image::ARGB:
 						{
 
-							Renderer<PixelARGB, LCDMatrixOrientation::BGR>
+							Renderer<juce::PixelARGB, LCDMatrixOrientation::BGR>
 								subpixelRenderer(destData, colour, pos, startingClip, gammaScale);
 
 							outlines->iterate(subpixelRenderer);

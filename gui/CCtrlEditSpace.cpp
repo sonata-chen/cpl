@@ -441,7 +441,7 @@ namespace cpl
 		{
 			return "What the internal value represents.";
 		}
-		return juce::String::empty;
+		return juce::String();
 	}
 	void CCtrlEditSpace::onObjectDestruction(const CBaseControl::ObjectProxy & ctrl)
 	{

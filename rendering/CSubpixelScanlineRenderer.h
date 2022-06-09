@@ -37,6 +37,7 @@
 
 #include "../Common.h"
 #include "SubpixelRendering.h"
+#include "Mathext.h"
 
 namespace cpl
 {

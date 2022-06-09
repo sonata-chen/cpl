@@ -31,6 +31,7 @@
 #include "Misc.h"
 #include "CExclusiveFile.h"
 #include "PlatformSpecific.h"
+#include "stdext.h"
 
 namespace cpl
 {
@@ -79,7 +80,7 @@ namespace cpl
 		using namespace cpl::Misc;
 		CExclusiveFile exceptionLog;
 
-		exceptionLog.open(GetDirectoryPath() + "/" + programInfo.name + " exceptions.log",
+		exceptionLog.open(DirectoryPath() + "/" + programInfo.name + " exceptions.log",
 			exceptionLog.writeMode | exceptionLog.append, true);
 		exceptionLog.newline();
 		exceptionLog.write(("----------------" + GetDate() + ", " + GetTime() + "----------------").c_str());

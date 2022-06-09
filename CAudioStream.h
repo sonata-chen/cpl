@@ -48,6 +48,8 @@
 #include <numeric>
 #include "Protected.h"
 
+#include <cstdarg>
+
 #ifdef CPL_MSVC
 #pragma warning(push, 3)
 #pragma warning(disable:4100) // unused parameters
@@ -1335,7 +1337,7 @@ namespace cpl
 				}
 			}
 			// fixes all the relaxed stores
-			std_memory_fence(std::memory_order::memory_order_release);
+			std_memory_fence(std::memory_order_release);
 			return false;
 		}
 		/// <summary>
@@ -1671,7 +1673,7 @@ namespace cpl
 						}
 
 						if(channels > 0)
-							numDeferredAsyncSamples.store(deferredAudioInput[0].size(), std::memory_order::memory_order_release);
+							numDeferredAsyncSamples.store(deferredAudioInput[0].size(), std::memory_order_release);
 					}
 				}
 
@@ -1679,7 +1681,7 @@ namespace cpl
 				double timeFraction = (double)audioInput.containedSamples;
 				if (std::isnormal(timeFraction))
 				{
-					timeFraction /= internalInfo.sampleRate.load(std::memory_order::memory_order_relaxed);
+					timeFraction /= internalInfo.sampleRate.load(std::memory_order_relaxed);
 					lpFilterTimeToMeasurement(measures.asyncOverhead, overhead.clocksToCoreUsage(overhead.getTime()), timeFraction);
 					lpFilterTimeToMeasurement(measures.asyncUsage, all.clocksToCoreUsage(all.getTime()), timeFraction);
 				}
