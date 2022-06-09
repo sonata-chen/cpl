@@ -30,6 +30,7 @@
 #ifndef CPL_SUBPIXELRENDERING_H
 #define CPL_SUBPIXELRENDERING_H
 #include <cstdint>
+#include <climits>
 #include "../Types.h"
 #include "DisplayOrientation.h"
 
