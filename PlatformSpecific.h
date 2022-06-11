@@ -53,10 +53,11 @@
 #ifdef CPL_MAC
 #include <mach-o/dyld.h>
 #include <mach/mach_time.h>
+#include <sys/sysctl.h>
 #include "MacSupport.h"
 #include <IOKit/graphics/IOGraphicsLib.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/glext.h>
+// #include <OpenGL/gl.h>
+// #include <OpenGL/glext.h>
 
 #endif
 

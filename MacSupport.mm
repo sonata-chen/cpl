@@ -31,6 +31,8 @@
 // but all hell breaks loose if this is not here.
 //#define Point CarbonDummyPointName
 
+#include "Misc.h"
+
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/NSString.h>
 #import <AppKit/NSPanel.h>
@@ -39,7 +41,6 @@
 #import <IOKit/graphics/IOGraphicsLib.h>
 
 #include "MacSupport.h"
-#include "Misc.h"
 #include "Exceptions.h"
 
 #include <string.h>

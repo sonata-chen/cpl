@@ -363,7 +363,7 @@
 	#define NI "Error: This feature is not implemented for target (" __FILE__ ", " __LINE__ " - " __FUNCTION__ ".)"
 
 
-    #ifdef __cpp_lib_char8_t
+    #ifdef __cpp_char8_t
         #define utf8_literal(u8_literal) \
             reinterpret_cast<const char   *>(u8_literal)
     #else
