@@ -32,7 +32,7 @@
 #define CPL_DESIGNBASE_H
 
 #include "../Common.h"
-#include "Utility.h"
+#include "../Utility.h"
 #include <map>
 #include <vector>
 
